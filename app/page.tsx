@@ -1,7 +1,9 @@
 "use client";
 import React from "react";
 import Image from "next/image";
+import { useState } from "react";
 export default function Home() {
+  
   return (
     <div className="min-h-screen bg-[#FFF8E7] font-sans flex flex-col items-center  pb-8 overflow-x-hidden">
       {/* ===== TOP SECTION / VIEWPORT 1 ===== */}
@@ -183,6 +185,7 @@ function TimetableIllustration() {
   );
 }
 function Section1() {
+  const [open, setOpen] = useState(false);
   return (
     <>
       <div className="w-full min-h-screen flex justify-center items-center bg-[#FFF8E7]">
@@ -213,9 +216,73 @@ function Section1() {
                 Adipiscing Elit, Sed Do Eiusmod Tempor
               </p>
               <div className="flex gap-4 absolute top-60">
-                <button className="rounded-[8px] w-[180px] h-[50px]  py-3.5 text-[14px] font-bold text-black border-[1.5px] border-[#A0C4FF] bg-[#A0C4FF] hover:bg-[#8ab2f2] transition-colors shadow-sm">
+                <button
+                  onClick={() => setOpen(true)}
+                  className="rounded-[8px] w-[180px] h-[50px]  py-3.5 text-[14px] font-bold text-black border-[1.5px] border-[#A0C4FF] bg-[#A0C4FF] hover:bg-[#8ab2f2] transition-colors shadow-sm"
+                >
                   Get Started
                 </button>
+                {open && (
+                  <div className="fixed  inset-0 flex items-center justify-center bg-black/30 z-50">
+                    {/* Modal */}
+                    <div className="flex items-center justify-center w-[949px] h-[511px] bg-[#FFFCEE] rounded-[20px] shadow-xl p-8 relative">
+                      {/* Close Button */}
+                      <div className="relative bg-[#FAFAFA] w-[900px] h-[459px] flex flex-col items-center rounded-[20px] p-10 shadow-[4px_4px_4px_rgba(191,191,191,0.25)]">
+                        {/* Close Button */}
+                        <button
+                          onClick={() => setOpen(false)}
+                          className="absolute top-6 right-6 text-gray-500 hover:text-black text-[28px]"
+                        >
+                          ✕
+                        </button>
+
+                        {/* Title */}
+                        <h2 className="text-[32px] font-semibold text-center mb-2 absolute top-[50px]">
+                          Welcome back, Sravan Kowsik Gonuguntla!
+                        </h2>
+
+                        {/* Divider */}
+                        <div className="w-[700px] h-[1px] bg-gray-300 mb-4 absolute top-[90px]"></div>
+
+                        {/* Subtitle */}
+                        <p className=" text-center text-[20px] mb-12 absolute top-[110px]">
+                          Choose what you'd like to do next
+                        </p>
+
+                        {/* Options */}
+                        <div className="flex gap-14 absolute top-[180px]">
+                          {/* Create new */}
+                          <button className="flex flex-col items-center justify-center bg-[#E9F3E8] border-[5px] border-[#D4F4E6] rounded-[16px] p-6 w-[290px] h-[200px] shadow hover:bg-green-200 transition">
+                            <Image
+                              src="/create_new.png"
+                              alt="create"
+                              width={167}
+                              height={101}
+                            />
+
+                            <p className=" font-medium text-center">
+                              Create a new one
+                            </p>
+                          </button>
+
+                          {/* View saved */}
+                          <button className="flex flex-col items-center justify-center bg-[#E9D5FF] border-[#F2D8FE] border-[5px] rounded-[16px] p-6 w-[290px] h-[200px] shadow hover:bg-purple-300 transition">
+                            <Image
+                              src="/savedTimeTable.png"
+                              alt="saved"
+                              width={167}
+                              height={101}
+                            />
+
+                            <p className="mt-4 font-medium text-center">
+                              View saved timetables
+                            </p>
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                )}
                 <button className="rounded-[8px] w-[180px] h-[50px]  border-[1.5px] border-[#A0C4FF] px-8 py-3.5 text-[14px] font-bold text-black bg-white hover:bg-blue-50 transition-colors shadow-sm">
                   Slot View
                 </button>
