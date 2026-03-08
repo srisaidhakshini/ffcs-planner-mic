@@ -1,0 +1,41 @@
+export const SelectDisciplineElective = {
+  'BECE320E - Embedded C Programming': [
+    { slot: 'L37+L38', venue: 'TT515', faculty: 'PONNAMBALAM P' },
+    { slot: 'L45+L46', venue: 'TT515', faculty: 'PONNAMBALAM P' },
+    { slot: 'C1', venue: 'TT404', faculty: 'PONNAMBALAM P' },
+    { slot: 'L13+L14', venue: 'TT515', faculty: 'SELVAKUMAR K' },
+    { slot: 'L29+L30', venue: 'TT515', faculty: 'PONNAMBALAM P' },
+    { slot: 'C2', venue: 'TT413', faculty: 'PONNAMBALAM P' },
+    { slot: 'L7+L8', venue: 'TT515', faculty: 'PONNAMBALAM P' },
+    { slot: 'L39+L40', venue: 'TT515', faculty: 'MARIMUTHU R' },
+    { slot: 'L43+L44', venue: 'TT515', faculty: 'JAKEER HUSSAIN' },
+    { slot: 'C1', venue: 'TT413', faculty: 'MARIMUTHU R' },
+    { slot: 'L55+L56', venue: 'TT515', faculty: 'MARIMUTHU R' },
+    { slot: 'L11+L12', venue: 'TT515', faculty: 'SELVAKUMAR K' },
+    { slot: 'C2', venue: 'TT404', faculty: 'SELVAKUMAR K' },
+    { slot: 'C1', venue: 'TT414', faculty: 'JAKEER HUSSAIN' },
+    { slot: 'L35+L36', venue: 'TT515', faculty: 'JAKEER HUSSAIN' },
+  ],
+  'BEEE211E - VLSI Design': [
+    { slot: 'L7+L8', venue: 'TT128', faculty: 'UMA SATHYAKAM P' },
+    { slot: 'L53+L54', venue: 'TT128', faculty: 'UMA SATHYAKAM P' },
+    { slot: 'A2', venue: 'TT413', faculty: 'UMA SATHYAKAM P' },
+    { slot: 'L21+L22', venue: 'TT128', faculty: 'UMA SATHYAKAM P' },
+    { slot: 'A1', venue: 'TT413', faculty: 'UMA SATHYAKAM P' },
+    { slot: 'L37+L38', venue: 'TT128', faculty: 'UMA SATHYAKAM P' },
+  ],
+  'BEEE406L - FACTS and HVDC': [{ slot: 'B2+TB2', venue: 'TT201', faculty: 'RAVI K' }],
+  'BEEE409L - Robotics and Control': [
+    { slot: 'G2+TG2', venue: 'TT204', faculty: 'RASHMI RANJAN DAS' },
+  ],
+  'BEEE410L - Machine Learning': [
+    { slot: 'E1+TE1', venue: 'TT523', faculty: 'MONICA SUBASHINI  M' },
+  ],
+  'BEEE411L - Artificial Intelligence': [
+    { slot: 'G2+TG2', venue: 'TT416', faculty: 'MUKUL CHANKAYA' },
+    { slot: 'G1+TG1', venue: 'TT416', faculty: 'MUKUL CHANKAYA' },
+  ],
+  'BEEE416L - Electric Vehicles': [{ slot: 'E1+TE1', venue: 'TT201', faculty: 'CHITRA A' }],
+  'BEEE422L - Deep Learning': [{ slot: 'E2+TE2', venue: 'TT104', faculty: 'RAGHUNATHAN T' }],
+  'BEEE425L - Machine Vision': [{ slot: 'G2+TG2', venue: 'TT424', faculty: 'MONICA SUBASHINI  M' }],
+};
