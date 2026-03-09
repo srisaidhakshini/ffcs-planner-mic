@@ -2,7 +2,7 @@ import { AuthOptions, SessionStrategy } from 'next-auth';
 import GoogleProvider from 'next-auth/providers/google';
 import { MongoDBAdapter } from '@auth/mongodb-adapter';
 import type { MongoClient } from 'mongodb';
-import clientPromise from '@/lib/mongodb-client';
+import getClientPromise from '@/lib/mongodb-client';
 
 export const authOptions: AuthOptions = {
     providers: [
@@ -18,7 +18,7 @@ export const authOptions: AuthOptions = {
             },
         }),
     ],
-    adapter: MongoDBAdapter(clientPromise as Promise<MongoClient>),
+    adapter: MongoDBAdapter(getClientPromise() as Promise<MongoClient>),
     session: {
         strategy: 'database' as SessionStrategy,
     },

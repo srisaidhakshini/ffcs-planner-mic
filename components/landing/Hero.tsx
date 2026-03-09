@@ -1,8 +1,22 @@
 import { useState } from "react";
 import Image from "next/image";
 import TimetableIllustration from "./TImeTableIllustration";
+import { signIn, useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
+
 export default function Section1() {
   const [open, setOpen] = useState(false);
+  const { data: session } = useSession();
+  const router = useRouter();
+
+  function handleLogin() {
+    if (session) {
+      setOpen(true);
+    } else {
+      signIn("google", { callbackUrl: "/" });
+    }
+  }
+
   return (
     <>
       <div className="w-full min-h-screen flex justify-center items-center bg-[#FFF8E7]">
@@ -13,8 +27,11 @@ export default function Section1() {
               FFCS
             </span>
 
-            <button className="right-20 top-7 absolute w-[120px] h-[45px] rounded-[8px] border-[3px] border-[#93C5FD] bg-white px-10 py-2.5 text-[14px] font-semibold text-black hover:bg-gray-50 transition-colors shadow-sm">
-              Login
+            <button
+              onClick={handleLogin}
+              className="right-20 top-7 absolute w-[120px] h-[45px] rounded-[8px] border-[3px] border-[#93C5FD] bg-white px-10 py-2.5 text-[14px] font-semibold text-black hover:bg-gray-50 transition-colors shadow-sm"
+            >
+              {session ? session.user?.name?.split(" ")[0] : "Login"}
             </button>
           </nav>
 
@@ -34,7 +51,7 @@ export default function Section1() {
               </p>
               <div className="flex gap-4 absolute top-60">
                 <button
-                  onClick={() => setOpen(true)}
+                  onClick={handleLogin}
                   className="rounded-[8px] w-[180px] h-[50px]  py-3.5 text-[14px] font-bold text-black border-[1.5px] border-[#A0C4FF] bg-[#A0C4FF] hover:bg-[#8ab2f2] transition-colors shadow-sm"
                 >
                   Get Started
@@ -55,7 +72,7 @@ export default function Section1() {
 
                         {/* Title */}
                         <h2 className="text-[32px] font-semibold text-center mb-2 absolute top-[50px]">
-                          Welcome back, Sravan Kowsik Gonuguntla!
+                          Welcome back, {session?.user?.name}!
                         </h2>
 
                         {/* Divider */}
@@ -63,13 +80,16 @@ export default function Section1() {
 
                         {/* Subtitle */}
                         <p className=" text-center text-[20px] mb-12 absolute top-[110px]">
-                          Choose what you'd like to do next
+                          Choose what you&apos;d like to do next
                         </p>
 
                         {/* Options */}
                         <div className="flex gap-14 absolute top-[180px]">
                           {/* Create new */}
-                          <button className="flex flex-col items-center justify-center bg-[#E9F3E8] border-[5px] border-[#D4F4E6] rounded-[16px] p-6 w-[290px] h-[200px] shadow hover:bg-green-200 transition">
+                          <button
+                            onClick={() => { setOpen(false); router.push("/timetable"); }}
+                            className="flex flex-col items-center justify-center bg-[#E9F3E8] border-[5px] border-[#D4F4E6] rounded-[16px] p-6 w-[290px] h-[200px] shadow hover:bg-green-200 transition"
+                          >
                             <Image
                               src="/create_new.png"
                               alt="create"
@@ -83,7 +103,10 @@ export default function Section1() {
                           </button>
 
                           {/* View saved */}
-                          <button className="flex flex-col items-center justify-center bg-[#E9D5FF] border-[#F2D8FE] border-[5px] rounded-[16px] p-6 w-[290px] h-[200px] shadow hover:bg-purple-300 transition">
+                          <button
+                            onClick={() => { setOpen(false); router.push("/saved"); }}
+                            className="flex flex-col items-center justify-center bg-[#E9D5FF] border-[#F2D8FE] border-[5px] rounded-[16px] p-6 w-[290px] h-[200px] shadow hover:bg-purple-300 transition"
+                          >
                             <Image
                               src="/savedTimeTable.png"
                               alt="saved"
