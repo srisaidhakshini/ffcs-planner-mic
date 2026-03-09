@@ -1,8 +1,13 @@
+"use client";
 import { useState } from "react";
 import Image from "next/image";
 import TimetableIllustration from "./TImeTableIllustration";
+import LoginModal from "../loginPopup";
+import { useSession } from "next-auth/react";
 export default function Section1() {
   const [open, setOpen] = useState(false);
+  const [showLogin, setShowLogin] = useState(false)
+  const { data: session } = useSession();
   return (
     <>
       <div className="w-full min-h-screen flex justify-center items-center bg-[#FFF8E7]">
@@ -13,10 +18,13 @@ export default function Section1() {
               FFCS
             </span>
 
-            <button className="right-20 top-7 absolute w-[120px] h-[45px] rounded-[8px] border-[3px] border-[#93C5FD] bg-white px-10 py-2.5 text-[14px] font-semibold text-black hover:bg-gray-50 transition-colors shadow-sm">
+            <button className="right-20 top-7 absolute w-[120px] h-[45px] rounded-[8px] border-[3px] border-[#93C5FD] bg-white px-10 py-2.5 text-[14px] font-semibold text-black hover:bg-gray-50 transition-colors shadow-sm" onClick={() => setShowLogin(true)}>
               Login
             </button>
           </nav>
+          {showLogin && (
+            <LoginModal onClose={() => setShowLogin(false)} />
+          )}
 
           {/* HERO */}
           <div className="flex flex-col lg:flex-row items-center justify-around flex-1 w-full gap-8 mt-4 px-10">
@@ -34,7 +42,13 @@ export default function Section1() {
               </p>
               <div className="flex gap-4 absolute top-60">
                 <button
-                  onClick={() => setOpen(true)}
+                  onClick={() => {
+  if (session) {
+    setOpen(true);
+  } else {
+    setShowLogin(true);
+  }
+}}
                   className="rounded-[8px] w-[180px] h-[50px]  py-3.5 text-[14px] font-bold text-black border-[1.5px] border-[#A0C4FF] bg-[#A0C4FF] hover:bg-[#8ab2f2] transition-colors shadow-sm"
                 >
                   Get Started
@@ -55,7 +69,7 @@ export default function Section1() {
 
                         {/* Title */}
                         <h2 className="text-[32px] font-semibold text-center mb-2 absolute top-[50px]">
-                          Welcome back, Sravan Kowsik Gonuguntla!
+                          Welcome back, {session?.user?.name}!
                         </h2>
 
                         {/* Divider */}
