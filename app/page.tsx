@@ -2,11 +2,13 @@
 import React, { useState } from "react";
 import Image from "next/image";
 import "./landing.css"; // Ensure standard normal CSS is imported
+import LoginModal from "../components/loginPopup"
 
 export default function LandingPage() {
   const [open, setOpen] = useState(false);
   const [isCalendarAnimating, setIsCalendarAnimating] = useState(false);
   const [activeFaq, setActiveFaq] = useState<number | null>(0);
+  const [showLogin, setShowLogin] = useState(false)
 
   const handleCalendarClick = () => {
     setIsCalendarAnimating(true);
@@ -21,8 +23,11 @@ export default function LandingPage() {
       <div className="white-container">
         <nav className="navbar">
           <div className="logo">FFCS</div>
-          <button className="login-btn">Login</button>
+          <button className="login-btn" onClick={() => setShowLogin(true)}>Login</button>
         </nav>
+        {showLogin && (
+  <LoginModal onClose={() => setShowLogin(false)} />
+)}
 
         <section className="hero-section">
           <div className="hero-text">

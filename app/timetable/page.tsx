@@ -9,6 +9,7 @@ import { exportToPDF } from '@/lib/exportToPDF';
 import { generateTT } from '@/lib/utils';
 import { getSlotViewPayload } from '@/lib/slot-view';
 import { fullCourseData, timetableDisplayData } from '@/lib/type';
+import LoginModal from '@/components/loginPopup';
 
 const getCookie = (name: string): string | null => {
     if (typeof document === 'undefined') return null;
@@ -72,7 +73,29 @@ export default function TimetablePage() {
         setToast(msg);
         setTimeout(() => setToast(''), 3000);
     }, []);
+    if (status === "loading") {
+    return null;
+  }
 
+  // If NOT logged in → force login modal
+  if (!session) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+
+        {/* Hide close button without editing modal */}
+        <style jsx global>{`
+          .login-block button:first-of-type {
+            display: none;
+          }
+        `}</style>
+
+        <div className="login-block">
+          <LoginModal onClose={() => {}} />
+        </div>
+
+      </div>
+    );
+  }
     const handleSave = async (isPublic = false) => {
         if (!session?.user?.email || isSaving || currentTT.length === 0) return;
         setIsSaving(true);
