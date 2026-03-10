@@ -122,6 +122,7 @@ export default function LandingPage() {
                           className="flex flex-col items-center justify-center bg-[#E9D5FF] border-[#F2D8FE] border-[5px] rounded-[16px] p-6 w-[290px] h-[200px] shadow hover:bg-purple-300 transition text-black"
                           onClick={() => {
                             if (!session) {
+                              setOpen(false);
                               setShowLogin(true);
                             } else {
                               setOpen(false);
@@ -298,8 +299,8 @@ export default function LandingPage() {
                 <Image src="/calendar_icon2.png" alt="calendar" width={32} height={32} />
                 <span>Generate<br />timetable</span>
               </button>
-              <button 
-                className="f-btn f-btn-saved" 
+              <button
+                className="f-btn f-btn-saved"
                 onClick={() => {
                   if (!session) {
                     setShowLogin(true);
