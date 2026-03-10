@@ -101,7 +101,7 @@ function convertTimetableToCoursePreferences(tt: TimetableEntry): fullCourseData
             });
         }
         const course = courseMap.get(key)!;
-        
+
         if (!course.slots.has(entry.slot)) {
             course.slots.set(entry.slot, []);
         }
@@ -209,20 +209,20 @@ export default function SavedPage() {
     /* ── Handlers ── */
     function handleEdit(tt: TimetableEntry) {
         if (tt._id.startsWith('mock')) return;
-        
+
         // Clear timetable context for fresh generation
         setTimetableData(null);
-        
+
         // Convert timetable to course preferences format
         const coursePreferences = convertTimetableToCoursePreferences(tt);
-        
+
         // Save to cookie
         setCookie('preferenceCourses', JSON.stringify(coursePreferences));
-        
+
         // Store the timetable ID being edited
         setCookie('editingTimetableId', tt._id);
         setCookie('editingTimetableTitle', tt.title);
-        
+
         // Navigate to courses page
         router.push('/courses');
     }
