@@ -65,41 +65,51 @@ const createUid = () =>
         : `${Date.now()}-${Math.random().toString(36).slice(2)}`;
 
 const buildPreferenceCoursesFromRows = (rows: FacultyEntry[]): fullCourseData[] => {
-    const groups: CourseGroup[] = [];
+    // 1. Group rows by course code (so a course only exists once)
+    const coursesMap = new Map<string, {
+        courseCode: string;
+        courseName: string;
+        slotsMap: Map<string, Set<string>>; // slotName -> set of faculty names
+    }>();
 
-    rows.forEach((row) => {
-        const existingGroup = groups.find(
-            (group) =>
-                group.courseCode === row.courseCode &&
-                group.courseName === row.courseName &&
-                group.slot === row.slot,
-        );
-
-        if (existingGroup) {
-            existingGroup.faculties.push(row.facultyName);
-            return;
+    rows.forEach(row => {
+        if (!coursesMap.has(row.courseCode)) {
+            coursesMap.set(row.courseCode, {
+                courseCode: row.courseCode,
+                courseName: row.courseName, // typically identical across same course code
+                slotsMap: new Map(),
+            });
         }
 
-        groups.push({
-            courseCode: row.courseCode,
-            courseName: row.courseName,
-            slot: row.slot,
-            faculties: [row.facultyName],
+        const courseGroup = coursesMap.get(row.courseCode)!;
+        
+        if (!courseGroup.slotsMap.has(row.slot)) {
+            courseGroup.slotsMap.set(row.slot, new Set());
+        }
+        
+        courseGroup.slotsMap.get(row.slot)!.add(row.facultyName);
+    });
+
+    const result: fullCourseData[] = [];
+
+    // 2. Convert to the expected fullCourseData format
+    coursesMap.forEach((course) => {
+        const courseSlots = Array.from(course.slotsMap.entries()).map(([slotName, facultySet]) => ({
+            slotName,
+            slotFaculties: Array.from(facultySet).map(facultyName => ({ facultyName }))
+        }));
+
+        result.push({
+            // Using a simpler ID or one that encompasses all slots securely
+            id: `${course.courseCode}_${Date.now()}_${Math.random().toString(36).slice(2)}`,
+            courseType: getCourseType(course.courseCode),
+            courseCode: course.courseCode,
+            courseName: course.courseName,
+            courseSlots,
         });
     });
 
-    return groups.map((group) => ({
-        id: `${group.courseCode} - ${group.courseName}_${group.slot}_${group.faculties.join('_')}`,
-        courseType: getCourseType(group.courseCode),
-        courseCode: group.courseCode,
-        courseName: group.courseName,
-        courseSlots: [
-            {
-                slotName: group.slot,
-                slotFaculties: group.faculties.map((facultyName) => ({ facultyName })),
-            },
-        ],
-    }));
+    return result;
 };
 
 // Detect if two slots clash

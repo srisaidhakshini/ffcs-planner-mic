@@ -11,6 +11,11 @@ import { getSlotViewPayload } from '@/lib/slot-view';
 import { fullCourseData, timetableDisplayData } from '@/lib/type';
 import { clearPlannerClientCache } from '@/lib/clientCache';
 
+const setCookie = (name: string, value: string) => {
+    if (typeof document === 'undefined') return;
+    document.cookie = `${name}=${value}; path=/; max-age=3600`;
+};
+
 const getCookie = (name: string): string | null => {
     if (typeof document === 'undefined') return null;
     const nameEQ = name + '=';
@@ -112,7 +117,9 @@ export default function TimetablePage() {
 
             if (editingTimetableId) {
                 // Update existing timetable
+                const title = customTitle?.trim() || timetableTitle.trim() || 'My Schedule';
                 const res = await axios.patch(`/api/timetables/${editingTimetableId}`, {
+                    title,
                     slots: slotsData,
                 });
 
@@ -134,10 +141,17 @@ export default function TimetablePage() {
                 });
 
                 if (res.data.success) {
-                    clearPlannerClientCache({ includeEditingState: false });
+                    // Update editing cookie so subsequent shares bind to the new save!
+                    setCookie('editingTimetableId', res.data.timetable._id);
+                    setCookie('editingTimetableTitle', res.data.timetable.title);
+
                     if (!options?.skipRedirect) {
                         showToast('Timetable saved successfully!');
-                        setTimeout(() => { router.refresh(); router.push('/saved'); }, 1200);
+                        setTimeout(() => {
+                            clearPlannerClientCache({ includeEditingState: true });
+                            router.refresh();
+                            router.push('/saved');
+                        }, 1200);
                     }
                     return res.data.timetable;
                 }
@@ -543,7 +557,10 @@ export default function TimetablePage() {
                             Previous
                         </button>
                         <button
-                            onClick={() => router.push('/saved')}
+                            onClick={() => {
+                                clearPlannerClientCache({ includeEditingState: true });
+                                router.push('/saved');
+                            }}
                             className="px-10 py-2.5 rounded-lg font-semibold text-sm bg-[#A0C4FF] hover:bg-[#90B4EF] text-black transition-all duration-200 cursor-pointer"
                         >
                             Next
