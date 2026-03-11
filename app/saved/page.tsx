@@ -782,7 +782,7 @@ function TimetableDetailView({
                                     <td>{code}</td>
                                     <td>{info.courseName}</td>
                                     <td>{info.facultyName}</td>
-                                    <td>3</td>
+                                    <td>—</td>
                                 </tr>
                             ))}
                         </tbody>
