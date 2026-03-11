@@ -35,7 +35,6 @@ export async function GET(req: NextRequest) {
     try {
         const timetables = await Timetable.find({
             owner,
-            isPublic: false,
         })
             .sort({ createdAt: -1 })
             .lean();

@@ -136,9 +136,17 @@ export default function PreferencesPage() {
         'SCE',
         'SHINE',
         'SCOPE_F',
+        'SBST_F',
+        'SCORE_F',
+        'SENSE_F',
+        'SELECT_F',
+        'SHINE_F',
+        'SMEC_F',
         'MTech_SCOPE',
         'MTech_SCORE',
     ];
+
+    const deptDisplayName = (dept: string) => dept.endsWith('_F') ? dept.replace('_F', '_Freshers') : dept;
 
     // Load department data dynamically
     const departmentData = useMemo(() => {
@@ -155,6 +163,12 @@ export default function PreferencesPage() {
                 SCE: require('@/data/SCE').SCE_LIST,
                 SHINE: require('@/data/SHINE').SHINE_LIST,
                 SCOPE_F: require('@/data/SCOPE_F').SCOPE_F,
+                SBST_F: require('@/data/SBST_F').SBST_F,
+                SCORE_F: require('@/data/SCORE_F').SCORE_F,
+                SENSE_F: require('@/data/SENSE_F').SENSE_F,
+                SELECT_F: require('@/data/SELECT_F').SELECT_F,
+                SHINE_F: require('@/data/SHINE_F').SHINE_F,
+                SMEC_F: require('@/data/SMEC_F').SMEC_F,
                 MTech_SCOPE: require('@/data/MTech_SCOPE').MTech_SCOPE,
                 MTech_SCORE: require('@/data/MTech_SCORE').MIS_LIST,
             };
@@ -436,7 +450,7 @@ export default function PreferencesPage() {
                                                             : 'bg-white/80 hover:bg-white hover:shadow-sm'
                                                             }`}
                                                     >
-                                                        {dept}
+                                                        {deptDisplayName(dept)}
                                                     </button>
                                                 ))}
                                             </div>

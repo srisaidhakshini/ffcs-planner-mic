@@ -560,6 +560,7 @@ function TimetableDetailView({
     onBack,
     onDelete,
     onCopyLink,
+    onRename,
     session,
     router,
     showToast,
@@ -570,9 +571,7 @@ function TimetableDetailView({
     onDelete: () => void;
     onCopyLink: () => void;
     onTogglePublic: () => void;
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     session: any;
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     router: any;
     showToast: (msg: string) => void;
 }) {
@@ -637,8 +636,11 @@ function TimetableDetailView({
                     <button onClick={onBack} className="dv-back-btn">←</button>
                     <h1 className="dv-title">{tt.title}</h1>
                     <div className="dv-title-actions">
-                        <button onClick={onCopyLink} className="dv-icon-btn" title="Share">
-                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#374151" strokeWidth="2"><circle cx="18" cy="5" r="3" /><circle cx="6" cy="12" r="3" /><circle cx="18" cy="19" r="3" /><line x1="8.59" y1="13.51" x2="15.42" y2="17.49" /><line x1="15.41" y1="6.51" x2="8.59" y2="10.49" /></svg>
+                        <button onClick={onRename} className="dv-icon-btn" title="Rename">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#374151" strokeWidth="2">
+                                <path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7" />
+                                <path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z" />
+                            </svg>
                         </button>
                         <button onClick={onCopyLink} className="dv-icon-btn" title="Copy link">
                             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#374151" strokeWidth="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2" /><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1" /></svg>
@@ -780,7 +782,7 @@ function TimetableDetailView({
                                     <td>{code}</td>
                                     <td>{info.courseName}</td>
                                     <td>{info.facultyName}</td>
-                                    <td>3</td>
+                                    <td>—</td>
                                 </tr>
                             ))}
                         </tbody>
