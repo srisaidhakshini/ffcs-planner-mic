@@ -21,6 +21,12 @@ export async function GET(req: NextRequest) {
             return NextResponse.json({ error: 'Not found' }, { status: 404 });
         }
 
+        const NO_STORE_HEADERS = {
+            'Cache-Control': 'no-store, no-cache, must-revalidate, proxy-revalidate',
+            Pragma: 'no-cache',
+            Expires: '0',
+        };
+
         // Any timetable with a shareId can be viewed via share link.
         // The shareId itself acts as access control.
         return NextResponse.json({
@@ -31,7 +37,7 @@ export async function GET(req: NextRequest) {
                 owner: timetable.owner,
                 shareId: timetable.shareId,
             },
-        });
+        }, { headers: NO_STORE_HEADERS });
     } catch {
         return NextResponse.json({ error: 'Server error' }, { status: 500 });
     }
